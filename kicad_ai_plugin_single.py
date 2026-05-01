@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 # No default API key - user must provide their own
 DEFAULT_API_KEY = ""
-DEFAULT_MODEL = "gpt-3.5-turbo"  # Using a more cost-effective model as default
+DEFAULT_MODEL = "deepseek-r1-0528"  # Using a free model available on routers
 
 # Detailed system prompt for better AI assistant guidance
 SYSTEM_PROMPT = """
@@ -1184,8 +1184,8 @@ class ChatPanel(wx.Panel):
         model_sizer = wx.BoxSizer(wx.HORIZONTAL)
         model_label = wx.StaticText(chat_container, label="Model:")
         model_label.SetForegroundColour(wx.Colour(255, 255, 255))  # White text for dark theme
-        self.model_selector = wx.Choice(chat_container, choices=["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"])
-        self.model_selector.SetSelection(0)  # Default to gpt-3.5-turbo
+        self.model_selector = wx.Choice(chat_container, choices=["deepseek-r1-0528", "deepseek-v3.1", "deepseek-v3.2", "glm-5.1"])
+        self.model_selector.SetSelection(0)  # Default to deepseek-r1-0528
         self.model_selector.Bind(wx.EVT_CHOICE, self.on_model_change)
         model_sizer.Add(model_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 5)
         model_sizer.Add(self.model_selector, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 15)
