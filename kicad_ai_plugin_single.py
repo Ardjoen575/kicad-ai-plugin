@@ -85,6 +85,18 @@ def get_api_key():
         logger.error(f"Error loading API key: {str(e)}")
         return ""
 
+def get_base_url():
+    """Get base URL from config file"""
+    try:
+        if os.path.exists(API_CONFIG_FILE):
+            with open(API_CONFIG_FILE, "r") as f:
+                config = json.load(f)
+                return config.get("base_url", "api.openai.com")
+        return "api.openai.com"
+    except Exception as e:
+        logger.error(f"Error loading base URL: {str(e)}")
+        return "api.openai.com"
+
 def save_api_key(api_key):
     """Save API key to config file"""
     try:
@@ -92,9 +104,20 @@ def save_api_key(api_key):
         config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config")
         os.makedirs(config_dir, exist_ok=True)
         
-        # Save the API key
+        # Keep existing config like base_url
+        existing_config = {}
+        if os.path.exists(API_CONFIG_FILE):
+            try:
+                with open(API_CONFIG_FILE, "r") as f:
+                    existing_config = json.load(f)
+            except Exception:
+                pass
+                
+        existing_config["api_key"] = api_key
+        
+        # Save the config
         with open(API_CONFIG_FILE, "w") as f:
-            json.dump({"api_key": api_key}, f, indent=2)
+            json.dump(existing_config, f, indent=2)
         return True
     except Exception as e:
         logger.error(f"Error saving API key: {str(e)}")
@@ -332,6 +355,7 @@ class OpenAIClient:
     
     def __init__(self, api_key=None):
         self.api_key = api_key or get_api_key()
+        self.base_url = get_base_url()
         self.model = DEFAULT_MODEL
         
     def set_model(self, model):
@@ -437,7 +461,7 @@ class OpenAIClient:
             context = ssl._create_unverified_context()
             
             # Create a connection with the custom SSL context
-            conn = http.client.HTTPSConnection("api.openai.com", context=context)
+            conn = http.client.HTTPSConnection(self.base_url, context=context)
             conn.request("POST", "/v1/chat/completions", json.dumps(data), headers)
             response = conn.getresponse()
             
