@@ -1,0 +1,34 @@
+{
+  "name": "KiCad AI Plugin by ALT TAB",
+  "description": "AI-powered KiCad assistant by ALT TAB",
+  "description_full": "An AI-powered assistant plugin for KiCad that provides a chat interface to help with PCB and schematic design tasks.",
+  "identifier": "rs.alttab.kicad.ai-plugin",
+  "type": "plugin",
+  "author": {
+    "name": "ALT TAB",
+    "contact": {
+      "web": "https://alttab.rs"
+    }
+  },
+  "maintainer": {
+    "name": "ALT TAB"
+  },
+  "license": "Proprietary",
+  "resources": {
+    "homepage": "https://alttab.rs"
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "status": "testing",
+      "kicad_version": "9.0"
+    }
+  ],
+  "tags": {
+    "categories": [
+      "UI enhancements",
+      "Tools"
+    ],
+    "plugins": ["AI Tools"]
+  }
+} 
